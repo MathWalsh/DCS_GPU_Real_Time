@@ -14,13 +14,11 @@
 #include "ThreadHandler.h"
 
 
-
-
-void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUDA_GPU_interface& GpuCard, AcquisitionThreadFlowControl& threadControl)
+void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUDA_GPU_interface& GpuCard, AcquisitionThreadFlowControl& threadControl, DCSProcessingHandler& DcsProcessing)
 {
 	/**Configuration**/
 
-	ThreadHandler handler(AcquisitionCard, GpuCard, threadControl);		// Critical section: Operations in constructor under mutex lock
+	ThreadHandler handler(AcquisitionCard, GpuCard, threadControl, DcsProcessing);		// Critical section: Operations in constructor under mutex lock
 
 	std::cout << "We are in processing thread !!!\n";
 
@@ -28,13 +26,19 @@ void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUD
 	{
 		handler.CreateOuputFiles();
 
-		handler.ReadandAllocaterFilterCoefficients();
+		handler.ReadandAllocateFilterCoefficients();
 
 		handler.AllocateAcquisitionCardStreamingBuffers();		// critical section: this is performed under a mutex lock 
 
 		handler.RegisterAlignedCPUBuffersWithCuda();
 
 		handler.AllocateGPUBuffers();
+
+		handler.ReadandAllocateTemplateData();
+
+		handler.CreateCudaStream();
+
+		handler.CreatecuSolverHandle();
 
 		handler.setReadyToProcess(true); // Thread ready to process
 		std::cout << "Thread Ready to process..\n";
@@ -60,25 +64,26 @@ void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUD
 
 		try
 		{
-			handler.setCurrentBuffers(u32LoopCount&1);
+			handler.setCurrentBuffers(u32LoopCount);
 
 			handler.StartCounter();
 
 			handler.ScheduleCardTransferWithCurrentBuffer(); // Instructing acquisition card to transfert to current buffer
 
 		
-			handler.copyDataToGPU_async();					// Async copy to GPU, the can't occur in current Buffer since we just started the card DMA transfert
+			handler.copyDataToGPU_async(u32LoopCount);		// Async copy to GPU, the can't occur in current Buffer since we just started the card DMA transfert
 															// All processing need to happen on the work buffer.
 															// if we want to hide the async transfer to GPU, we probably need a triple buffer approach  
 															// (one for acq card DMA (current buffer) , one for DMA transfert to GPU (previous buffer), oen for processing (work buffer)  
-
-			handler.ProcessInGPU(u32LoopCount);				// This is where GPU processing occurs on work buffer. 
-															// should convert to bollean arguemnt u32LoopCount&1
-
+			if (u32LoopCount > 1) {
+				handler.ProcessInGPU(u32LoopCount -2);				// This is where GPU processing occurs on work buffer. -1 because it is easier to understand
+				// should convert to bollean arguemnt u32LoopCount&1
+				//handler.WriteRawDataToFile();					 // Note that this operates on the previous workBuffer, while we transfert to current buffer;
+			}
+			if (u32LoopCount > 2) {
+				handler.WriteProcessedDataToFile(u32LoopCount - 3);
+			}
 			
-
-			//handler.WriteRawDataToFile();					 // Note that this operates on the previous workBuffer, while we transfert to current buffer;
-			//handler.WriteProcessedDataToFile();	
 						
 			handler.StopCounter();
 
@@ -106,7 +111,7 @@ void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUD
 
 	// Processing of the final workBuffer
 
-		handler.copyDataToGPU_async();					
+		handler.copyDataToGPU_async(u32LoopCount); // add +1 to loop count? 
 		handler.ProcessInGPU(u32LoopCount);				 
 
 		//handler.WriteRawDataToFile();								// I do not have the padding with the sector size of the original code

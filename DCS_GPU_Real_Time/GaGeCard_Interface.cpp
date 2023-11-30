@@ -67,7 +67,7 @@ int32 GaGeCard_interface::InitializeAndConfigure()
 {
 	i32Status = InitializeDriver();
 	i32Status = GetFirstSystem();
-	i32Status = RetreiveSystemInfo();
+	i32Status = RetrieveSystemInfo();
 	i32Status = ConfigureFromInitFile();
 
 	return i32Status;
@@ -111,7 +111,7 @@ CSHANDLE GaGeCard_interface::GetSystemHandle()
 
 // Queries the board (system) for its info.
 
-int32 GaGeCard_interface::RetreiveSystemInfo()
+int32 GaGeCard_interface::RetrieveSystemInfo()
 {
 	CsSysInfo.u32Size = sizeof(CSSYSTEMINFO);
 
@@ -272,27 +272,6 @@ int32 GaGeCard_interface::LoadStmConfigurationFromInitFile()
 
 	nDummy = 0;
 	StreamConfig.NptsTot = GetPrivateProfileInt(STM_SECTION, _T("NptsTot"), nDummy, szFilePath);
-
-	//StreamConfig.NActiveChannel = 1;
-	//nDummy = 0;
-	//CHAR Mode = GetPrivateProfileInt(ACQ_SECTION, _T("Mode"), nDummy, szFilePath);
-	//printf("Mode : %s", Mode);
-	//if (Mode == "Single") {
-	//	StreamConfig.NActiveChannel = 1;
-	//}
-	//else if (Mode == "Dual") {
-	//	StreamConfig.NActiveChannel = 2;
-	//}
-	//else if (Mode == "Quad") {
-	//	StreamConfig.NActiveChannel = 4;
-	//}
-	//else if (Mode == "Octal") {
-	//	StreamConfig.NActiveChannel = 8;
-	//}
-	/*StreamConfig.IdxChannels = (uInt32*)malloc(CsStmCfg.NActiveChannel * sizeof(uInt32));
-	for (uInt32 i = 0; i < CsStmCfg.NActiveChannel; i++) {
-		StreamConfig.IdxChannels[i] = i;
-	}*/
 
 	_stprintf(szDefault, _T("%s"), StreamConfig.strResultFile);
 	GetPrivateProfileString(STM_SECTION, _T("DataFile"), szDefault, szString, MAX_PATH, szFilePath);

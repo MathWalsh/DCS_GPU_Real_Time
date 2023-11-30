@@ -20,7 +20,7 @@
 
 #include "GaGeCard_Interface.h"
 #include "CUDA_GPU_Interface.h"
-
+#include "DCSprocessingHandler.h"
 											
  struct AcquisitionThreadFlowControl
 {
@@ -49,5 +49,5 @@
 
 // thread function Prototopye
 
-void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUDA_GPU_interface& GpuCard, AcquisitionThreadFlowControl& threadControl);
+void AcqusitionProcessingThreadFunction(GaGeCard_interface& AcquisitionCard, CUDA_GPU_interface& GpuCard, AcquisitionThreadFlowControl& threadControl, DCSProcessingHandler& DcsProcessing);
 

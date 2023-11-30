@@ -33,6 +33,9 @@
     <ClCompile Include="ThreadHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DCSProcessingHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GaGeCard_interface.h">
@@ -56,15 +59,71 @@
     <ClInclude Include="ThreadHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Linspace_GPU.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculate_dfr_reference_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute_MeanIGM_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Compute_SelfCorrection_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Convolution_complex32_optimized_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FastPhaseCorrection_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Find_First_ZPD_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Find_IGMs_ZPD_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unwrap_phase_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Linear_interpolation_GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Convolution_complex_GPU.cu">
+    <None Include="DCSProcessingHandler.h">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="Calculate_dfr_reference_GPU.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="Multiplication_complex_GPU.cu">
+    <CudaCompile Include="Compute_MeanIGM_GPU.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="Fast_phase_correction_GPU.cu">
+    <CudaCompile Include="Compute_SelfCorrection_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Convolution_complex32_optimized_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="FastPhaseCorrection_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Find_First_ZPD_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Find_IGMs_ZPD_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Linear_interpolation_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Linspace_GPU.cu">
+      <Filter>Source Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Unwrap_phase_GPU.cu">
       <Filter>Source Files</Filter>
     </CudaCompile>
   </ItemGroup>

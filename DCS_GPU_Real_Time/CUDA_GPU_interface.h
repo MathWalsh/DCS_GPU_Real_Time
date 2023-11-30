@@ -38,6 +38,8 @@
 
 typedef struct
 {
+	int32_t		i32GpuBlocks128;
+	int32_t		i32GpuBlocks256;
 	int32_t		i32GpuBlocks;
 	int32_t		i32GpuThreads;
 	uint32_t	u32SkipFactor;

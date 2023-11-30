@@ -83,7 +83,7 @@ public:
 
 	int32				RetreiveAcquisitionConfig();		// Retreive from field and populate object variables
 	int32				RetreiveTotalRequestedSamples();	// Ask the card how many samples were requested
-	int32				RetreiveSystemInfo();				// Queries the board for info
+	int32				RetrieveSystemInfo();				// Queries the board for info
 	
 	CSHANDLE			GetSystemHandle();
 	void				setAcquisitionConfig(CSACQUISITIONCONFIG acqConf);

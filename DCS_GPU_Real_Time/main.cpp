@@ -30,6 +30,7 @@
 #include "AcquisitionProcessingThread.h"
 #include "GaGeCard_Interface.h"
 #include "CUDA_GPU_Interface.h"
+#include "DCSprocessingHandler.h"
 
 
 
@@ -152,6 +153,7 @@ int main()
 	
 	CUDA_GPU_interface GpuCard;													// Object to configure, intialize and control GPU
 	GaGeCard_interface AcqusitionCard((std::string)"GaGeCardInitFile.ini");		// Object to configure, intialize and control acqu card
+	DCSProcessingHandler DcsProcessing;											// Object to configure  DCS processing
 
 	GpuCard.setTotalData(1000);
 
@@ -190,7 +192,7 @@ int main()
 	 The thread starts when we create it*/
 
 
-		std::thread AcquistionAndProcessingThread(AcqusitionProcessingThreadFunction, std::ref(AcqusitionCard), std::ref(GpuCard), std::ref(threadControl));
+		std::thread AcquistionAndProcessingThread(AcqusitionProcessingThreadFunction, std::ref(AcqusitionCard), std::ref(GpuCard), std::ref(threadControl), std::ref(DcsProcessing));
 
 		std::cout << "Waiting until thread is ready to process\n";
 

@@ -112,7 +112,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\CompuScope\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CsAppSupport.lib;CsSsm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CsAppSupport.lib;CsSsm.lib;cufft.lib;cusolver.lib;cublas.lib;cublasLt.lib;cusparse.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,11 +129,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>CsAppSupport.lib;CsSsm.lib;cufft.lib;cusolver.lib;cublas.lib;cublasLt.lib;cusparse.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AcquisitionProcessingThread.cpp" />
     <ClCompile Include="CUDA_GPU_Interface.cpp" />
+    <ClCompile Include="DCSProcessingHandler.cpp" />
     <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="GaGeCard_Interface.cpp" />
     <ClCompile Include="main.cpp" />
@@ -141,17 +143,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AcquisitionProcessingThread.h" />
+    <ClInclude Include="Calculate_dfr_reference_GPU.h" />
+    <ClInclude Include="Compute_MeanIGM_GPU.h" />
+    <ClInclude Include="Compute_SelfCorrection_GPU.h" />
+    <ClInclude Include="Convolution_complex32_optimized_GPU.h" />
     <ClInclude Include="Convolution_complex_GPU.h" />
     <ClInclude Include="CUDA_GPU_interface.h" />
     <ClInclude Include="ErrorHandler.h" />
+    <ClInclude Include="FastPhaseCorrection_GPU.h" />
+    <ClInclude Include="Find_First_ZPD_GPU.h" />
+    <ClInclude Include="Find_IGMs_ZPD_GPU.h" />
     <ClInclude Include="GaGeCard_interface.h" />
+    <ClInclude Include="Linear_interpolation_GPU.h" />
+    <ClInclude Include="Linspace_GPU.h" />
     <ClInclude Include="Multiplication_complex_GPU.h" />
     <ClInclude Include="ThreadHandler.h" />
+    <ClInclude Include="Unwrap_phase_GPU.h" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Convolution_complex_GPU.cu" />
-    <CudaCompile Include="Fast_phase_correction_GPU.cu" />
-    <CudaCompile Include="Multiplication_complex_GPU.cu" />
+    <None Include="DCSProcessingHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="Calculate_dfr_reference_GPU.cu" />
+    <CudaCompile Include="Compute_MeanIGM_GPU.cu" />
+    <CudaCompile Include="Compute_SelfCorrection_GPU.cu" />
+    <CudaCompile Include="Convolution_complex32_optimized_GPU.cu" />
+    <CudaCompile Include="FastPhaseCorrection_GPU.cu" />
+    <CudaCompile Include="Find_First_ZPD_GPU.cu" />
+    <CudaCompile Include="Find_IGMs_ZPD_GPU.cu" />
+    <CudaCompile Include="Linear_interpolation_GPU.cu" />
+    <CudaCompile Include="Linspace_GPU.cu" />
+    <CudaCompile Include="Unwrap_phase_GPU.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
