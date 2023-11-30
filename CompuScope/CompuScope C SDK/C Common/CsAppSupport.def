@@ -1,0 +1,11 @@
+LIBRARY	CsAppSupport
+
+EXPORTS
+
+CsAs_LoadConfiguration				@1
+CsAs_CalculateChannelIndexIncrement @2
+CsAs_ConfigureSystem				@3
+CsAs_SetApplicationDefaults			@4
+CsAs_ConvertToVolts					@5
+CsAs_SaveFile						@6
+CsAs_GetLastFileError				@7
